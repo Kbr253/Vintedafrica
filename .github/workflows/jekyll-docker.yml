@@ -1,0 +1,64 @@
+name: Jekyll site CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the site in the jekyll/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+            - nom : Configuration du JDK Java
+  utilisations : actions/setup-java@v4.6.0
+  avec:
+    # La version Java à configurer. Prend une version Java complète ou partielle. Voir des exemples de syntaxe prise en charge dans le fichier README
+    version java : # facultatif
+    # Le chemin d'accès au fichier `.java-version`. Voir des exemples de syntaxe prise en charge dans le fichier README
+    java-version-file: # facultatif
+    # Distribution Java. Voir la liste des distributions prises en charge dans le fichier README
+    distribution:
+    # Le type de package (jdk, jre, jdk+fx, jre+fx)
+    java-package : # facultatif, la valeur par défaut est jdk
+    # L'architecture du package (par défaut, l'architecture de l'exécuteur d'action)
+    architecture : # optionnel
+    # Chemin vers lequel se trouve le JDK compressé
+    jdkFile : # facultatif
+    # Définissez cette option si vous souhaitez que l'action vérifie la dernière version disponible qui satisfait à la spécification de version
+    check-latest: # facultatif
+    # ID du référentiel distributionManagement dans le fichier pom.xml. La valeur par défaut est « github »
+    server-id: # facultatif, la valeur par défaut est github
+    # Nom de la variable d'environnement pour le nom d'utilisateur pour l'authentification auprès du référentiel Apache Maven. La valeur par défaut est $GITHUB_ACTOR
+    server-username: # facultatif, la valeur par défaut est GITHUB_ACTOR
+    # Nom de la variable d'environnement pour le mot de passe ou le jeton d'authentification auprès du référentiel Apache Maven. La valeur par défaut est $GITHUB_TOKEN
+    server-password: # facultatif, la valeur par défaut est GITHUB_TOKEN
+    # Chemin vers lequel le fichier settings.xml sera écrit. La valeur par défaut est ~/.m2.
+    paramètres-chemin : # facultatif
+    # Remplacez le fichier settings.xml s'il existe. La valeur par défaut est "true".
+    overwrite-settings : # facultatif, la valeur par défaut est true
+    # Clé privée GPG à importer. La valeur par défaut est une chaîne vide.
+    gpg-private-key : # facultatif
+    # Nom de la variable d'environnement pour la phrase secrète de la clé privée GPG. La valeur par défaut est $GPG_PASSPHRASE.
+    gpg-passphrase : # facultatif
+    # Nom de la plateforme de build pour mettre en cache les dépendances. Il peut s'agir de « maven », « gradle » ou « sbt ».
+    cache : # facultatif
+    # Le chemin vers un fichier de dépendances : pom.xml, build.gradle, build.sbt, etc. Cette option peut être utilisée avec l'option `cache`. Si cette option est omise, l'action recherche le fichier de dépendances dans l'ensemble du référentiel. Cette option prend en charge les caractères génériques et une liste de noms de fichiers pour la mise en cache de plusieurs dépendances.
+    cache-dependency-path: # facultatif
+    # Solution de contournement pour transmettre le statut du travail à l'étape de publication du travail. Cette variable n'est pas destinée à la configuration manuelle
+    job-status : # facultatif, la valeur par défaut est ${{ job.status }}
+    # Le jeton utilisé pour l'authentification lors de la récupération des manifestes de version hébergés sur github.com, comme pour la version Microsoft d'OpenJDK. Lorsque vous exécutez cette action sur github.com, la valeur par défaut est suffisante. Lorsque vous exécutez sur GHES, vous pouvez transmettre un jeton d'accès personnel pour github.com si vous rencontrez une limitation de débit.
+    jeton : # facultatif, la valeur par défaut est ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Nom de l'ID de la chaîne d'outils Maven si le nom par défaut de « ${distribution}_${java-version} » n'est pas souhaité. Voir des exemples de syntaxe prise en charge dans le fichier d'utilisation avancée
+    mvn-toolchain-id : # facultatif
+    # Nom du fournisseur de la chaîne d'outils Maven si le nom par défaut de « ${distribution} » n'est pas souhaité. Voir des exemples de syntaxe prise en charge dans le fichier d'utilisation avancée
+    mvn-toolchain-vendor : # facultatif
+          
